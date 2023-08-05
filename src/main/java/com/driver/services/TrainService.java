@@ -81,7 +81,7 @@ public class TrainService {
         boolean stationFound = false;
         for(String routeStation: stations) {
 
-            if (routeStation.equals(stations.toString())){
+            if (routeStation.equals(station.toString())){
                 stationFound = true;
             }
         }
