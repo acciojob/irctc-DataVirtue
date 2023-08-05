@@ -89,9 +89,9 @@ public class TrainService {
         if(!stationFound){
             throw new Exception("Train is not passing from this station");
         }
-        int count  =0 ;
+        Integer count  =0 ;
         for(Ticket ticket: train.getBookedTickets()){
-            if(ticket.getFromStation().equals(station)){
+            if(ticket.getFromStation() == station){
                 count++;
             }
         }
