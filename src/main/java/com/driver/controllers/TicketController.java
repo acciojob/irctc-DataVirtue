@@ -23,6 +23,7 @@ public class TicketController {
             Integer ticketId = ticketService.bookTicket(bookTicketEntryDto);
             return ticketId;
         }catch (Exception e) {
+            System.out.println(e);
             return null;
         }
     }
