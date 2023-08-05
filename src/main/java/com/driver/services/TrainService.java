@@ -123,7 +123,7 @@ public class TrainService {
         }
         Integer count  =0 ;
         for(Ticket ticket: train.getBookedTickets()){
-            if(ticket.getFromStation() == station || ticket.getToStation()==station){
+            if(ticket.getFromStation().equals(station) || ticket.getToStation().equals(station)){
                 count++;
             }
         }
