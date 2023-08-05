@@ -41,7 +41,7 @@ public class TrainService {
         train.setRoute(route);
         train.setNoOfSeats(trainEntryDto.getNoOfSeats());
         Train savedTrain = trainRepository.save(train);
-        Integer id = train.getTrainId();
+        Integer id = savedTrain.getTrainId();
         return id;
     }
 
