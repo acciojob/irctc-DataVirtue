@@ -79,9 +79,13 @@ public class TrainService {
             Integer checkFromStation = getIndex(stations,seatAvailabilityEntryDto.getFromStation().toString());
             Integer checkToStation = getIndex(stations,seatAvailabilityEntryDto.getToStation().toString());
 
-            if(toStationIndex> checkFromStation && fromStationIndex< checkToStation){
-                bookedCount++;
+            if(toStationIndex<checkFromStation){
+                continue; // getting out before me
             }
+            if(fromStationIndex> checkToStation){
+                continue; // getting in after me
+            }
+            bookedCount++;
         }
 
 
