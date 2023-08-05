@@ -44,6 +44,14 @@ public class TrainService {
         Integer id = savedTrain.getTrainId();
         return id;
     }
+    private Integer getIndex(String arr[], String s){
+        for(int i=0;i<arr.length;i++){
+            if(arr[i].equals(s)){
+                return i;
+            }
+        }
+        return -1;
+    }
 
     public Integer calculateAvailableSeats(SeatAvailabilityEntryDto seatAvailabilityEntryDto){
 
@@ -55,9 +63,29 @@ public class TrainService {
         //even if that seat is booked post the destStation or before the boardingStation
         //Inshort : a train has totalNo of seats and there are tickets from and to different locations
         //We need to find out the available seats between the given 2 stations.
+        Optional<Train> trainOptional = trainRepository.findById(seatAvailabilityEntryDto.getTrainId());
+        if(trainOptional.get()==null){
+            throw new RuntimeException("Train Not Found");
+        }
+
+        Train train = trainOptional.get();
+        String [] stations = train.getRoute().split(",");
+
+        int bookedCount = 0;
+        for(Ticket ticket: train.getBookedTickets()){
+            Integer fromStationIndex = getIndex(stations, ticket.getFromStation().toString());
+            Integer toStationIndex = getIndex(stations, ticket.getToStation().toString());
+
+            Integer checkFromStation = getIndex(stations,seatAvailabilityEntryDto.getFromStation().toString());
+            Integer checkToStation = getIndex(stations,seatAvailabilityEntryDto.getToStation().toString());
+
+            if(toStationIndex> checkFromStation && fromStationIndex< checkToStation){
+                bookedCount++;
+            }
+        }
 
 
-       return null;
+       return train.getNoOfSeats()- bookedCount;
     }
 
     public Integer calculatePeopleBoardingAtAStation(Integer trainId,Station station) throws Exception{
